@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdbool.h>
+#include <conio.h>
 
 using namespace std;
 
@@ -32,8 +33,8 @@ void Draw()
 {
 	//Northern Wall
 	system("cls");
-	for (int i = 0; i < width; i++)
-		cout << "—";
+	for (int i = 0; i < width+2; i++)
+		cout << "#";
 	cout << endl;
 
 
@@ -43,27 +44,87 @@ void Draw()
 		for (int j = 0; j < width; j++)
 		{
 			if (j == 0)
-				cout << "|";
+				cout << "#";
+			if (i == y && j == x)
+				cout << "0";
+			else if (i == dotY && j == dotX)
+				cout << "F";
 			else
 				cout << " ";
 			if (j == width - 1)
-				cout << "|";
+				cout << "#";
 		}
-
+		cout << endl;
 	}
 
 	//Southern Wall
-	for (int i = 0; i < width; i++)
-		cout << "—";
+	for (int i = 0; i < width+2; i++)
+		cout << "#";
 	cout << endl;
 }
 
 void Control()
 {
-
+	if (_kbhit())
+	{
+		//kbhit will go off if when a key is hit, if its a key we'll use to control the snake it'll change the direction
+		switch (_getch())
+		{
+		case 'w':
+			dir = NORTH;
+			break;
+		case 'a':
+			dir = WEST;
+			break;
+		case 's':
+			dir = SOUTH;
+			break;
+		case 'd':
+			dir = EAST;
+			break;
+		//Just in case you need to abort the game
+		case 'l':
+			gameLost = true;
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void gameLogic()
+{
+	switch (dir)
+	{
+	case NORTH:
+		y--;
+		break;
+	case WEST:
+		x--;
+		break;
+	case SOUTH:
+		y++;
+		break;
+	case EAST:
+		x++;
+		break;
+	default:
+		break;
+	}
+
+	//loss condition: hitting the wall
+	if (x > width || x < 0 || y > height || y < 0)
+		gameLost = true;
+
+	//score condition: get the dot, move it somewhere else!
+	if (x == dotX && y = dotY)
+		score += 1;
+		//move it if you get it
+		dotX = rand() % width;
+		dotY = rand() % height;
+}
+
+void loserScreen()
 {
 
 }
