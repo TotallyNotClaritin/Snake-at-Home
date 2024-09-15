@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdbool.h>
+
 using namespace std;
 
 //variables
@@ -13,15 +15,15 @@ const int height = 20;
 
 void createGame()
 {
-	gameLost = False;
+	gameLost = false;
 	dir = STOP;
 
 	//Start in middle
 	x = width / 2;
 	y = height / 2;
 
-	fruitX = rand() % width; //0 to width - 1
-	fruitY = rand() % height; //0 to height - 1; if we're 0 indexed this is just right
+	dotX = rand() % width; //0 to width - 1
+	dotY = rand() % height; //0 to height - 1; if we're 0 indexed this is just right
 
 	score = 0;
 }
@@ -34,22 +36,26 @@ void Draw()
 		cout << "—";
 	cout << endl;
 
+
+	//West and East Walls
 	for (int i = 0; i < height; i++)
 	{
-		for (int j  = 0; j < weidth; j++)
+		for (int j = 0; j < width; j++)
+		{
 			if (j == 0)
-				cout << "|"
+				cout << "|";
 			else
-				cout << " "
+				cout << " ";
 			if (j == width - 1)
-				cout << "|"
+				cout << "|";
+		}
 
 	}
 
 	//Southern Wall
 	for (int i = 0; i < width; i++)
-		cout << "—"
-
+		cout << "—";
+	cout << endl;
 }
 
 void Control()
@@ -69,7 +75,7 @@ int main()
 	{
 		Draw();
 		Control();
-		Logic();
+		gameLogic();
 		//sleep(5); How slow do we need to go?
 	}
 
