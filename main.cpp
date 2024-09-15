@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdbool.h>
 #include <conio.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -33,6 +34,8 @@ void Draw()
 {
 	//Northern Wall
 	system("cls");
+
+	cout << "Score:" << score << endl;
 	for (int i = 0; i < width+2; i++)
 		cout << "#";
 	cout << endl;
@@ -117,11 +120,13 @@ void gameLogic()
 		gameLost = true;
 
 	//score condition: get the dot, move it somewhere else!
-	if (x == dotX && y = dotY)
+	if (x == dotX && y == dotY)
+	{
 		score += 1;
 		//move it if you get it
 		dotX = rand() % width;
 		dotY = rand() % height;
+	}
 }
 
 void loserScreen()
@@ -137,7 +142,7 @@ int main()
 		Draw();
 		Control();
 		gameLogic();
-		//sleep(5); How slow do we need to go?
+		Sleep(10);
 	}
 
 }
